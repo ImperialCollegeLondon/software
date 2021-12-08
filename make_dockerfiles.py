@@ -92,3 +92,14 @@ if __name__ == '__main__':
           MAKEJOBS=4,
           CFLAGS='-march=knl -mmmx -msse -msse2 -msse3 -mssse3 -mcx16 -msahf -mmovbe -maes -mpclmul -mpopcnt -mabm -mfma -mbmi -mbmi2 -mavx -mavx2 -msse4.2 -msse4.1 -mlzcnt -mrtm -mhle -mrdrnd -mf16c -mfsgsbase -mrdseed -mprfchw -madx -mfxsr -mxsave -mxsaveopt -mavx512f -mavx512cd -mclflushopt -mxsavec -mxsaves -mavx512dq -mavx512bw -mavx512vl -mclwb -mpku --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=28160 -mtune=generic',
           **versions)
+
+    write('docker/ic/Dockerfile', [base_template, ib_mlx_template, mvapich2_template, glotzerlab_software_template, finalize_template],
+          FROM='nvidia/cuda:11.1.1-devel-ubuntu20.04',
+          system='greatlakes',
+          MVAPICH_VERSION="2.3",
+          MVAPICH_PATCHLEVEL='.6',
+          UCX_VERSION='1.6.0',
+          PMIX_VERSION='2.2.3',
+          ENABLE_MPI='on',
+          MAKEJOBS=4,
+          **versions)
